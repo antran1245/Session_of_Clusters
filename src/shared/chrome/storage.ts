@@ -15,7 +15,6 @@ type BrowserType = {
 }
 type SessionType = {
   name: string;
-  description: string;
   browsers: BrowserType
 }
 
@@ -49,5 +48,28 @@ export const setStorageLocal = (session: SessionType): void => {
   currentStorageLocal = {...currentStorageLocal, ...newSession}
   chrome.storage.local.set({[sessionKeyName] : currentStorageLocal}, () => {
     lastErrorMessage("Error saving data to Chrome local storage.")
+  })
+}
+
+/**
+ * Clear all data from Chrome Storage.
+ */
+export const clearStorageLocal = (): void => {
+  chrome.storage.local.clear(() => {
+    if(lastErrorMessage("Error clearing all data from Chrome storage.")) {
+      console.log("Chrome Storage cleared of all data.")
+    }
+  })
+}
+
+/**
+ * Remove a selected data from Chrome Storage.
+ * @param key - A key to remove from the Chrome Storage.
+ */
+export const removeStorageLocal = (key: string): void => {
+  chrome.storage.local.remove(key, () => {
+    if(lastErrorMessage("Error removing data from Chrome storage.")) {
+      console.log("Chrome Storage remove selected data.")
+    }
   })
 }
