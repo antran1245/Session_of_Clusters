@@ -2,7 +2,7 @@ import { lastErrorMessage } from "./helper";
 
 let sessionKeyName: string = "sessions";
 
-let currentStorageLocal: StorageLocalType = {}
+export let currentStorageLocal: StorageLocalType = {}
 
 // Data types
 
@@ -27,16 +27,19 @@ type StorageLocalType = {
  * @param createSessionContainer - Boolean to determine if Session container need to be created.
  * @return - Storage or void
  */
-export const getStorageLocal = (createSessionContainer:boolean = false): StorageLocalType | void => {
-  chrome.storage.local.get([sessionKeyName], (result) => {
-    if (lastErrorMessage("Error retrieving data from Chrome local storage.")) {
-      if (createSessionContainer) {
-        console.log("create sessions within container")
-      }
-      currentStorageLocal = result[sessionKeyName] ? result[sessionKeyName] : {};
-      // return result[sessionKeyName] ? result[sessionKeyName] : {};
-    }
-  })
+export const getStorageLocal = (createSessionContainer:boolean = false): Promise<StorageLocalType | undefined> => {
+  return new Promise((resolve) => {
+    chrome.storage.local.get([sessionKeyName], (result) => {
+      let data = result[sessionKeyName] ? result[sessionKeyName] : {};
+      if (lastErrorMessage("Error retrieving data from Chrome local storage.")) {
+        if (createSessionContainer) {
+          console.log("create sessions within container")
+        }
+        // currentStorageLocal = data
+        resolve(data)
+        }
+      })
+    })
 }
 
 /**

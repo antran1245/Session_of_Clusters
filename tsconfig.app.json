@@ -28,7 +28,8 @@
       "@components/*": ["components/*"],
       "@features/*": ["features/*"],
       "@shared/*": ["shared/*"],
-    }
+    },
+    "types": ["chrome"]
   },
   "include": ["src"]
 }

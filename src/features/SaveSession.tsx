@@ -8,7 +8,6 @@ const SaveSession: React.FC = () => {
   const [name, setName] = useState("hello");
   function saveSession() {
     getTabs().then((tabs) => {
-      console.log(tabs);
       if (tabs) {
         let data: any = {};
         for (const tab of tabs) {
