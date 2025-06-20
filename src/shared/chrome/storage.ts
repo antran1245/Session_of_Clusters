@@ -46,13 +46,13 @@ export const getStorageLocal = (createSessionContainer:boolean = false): Promise
  * Save a Session onto the Chrome Local Storage
  * @param session - Data to save
  */
-export const setStorageLocal = (session: SessionType): Promise<void | undefined> => {
+export const setStorageLocal = (session: SessionType): Promise<boolean | undefined> => {
   return new Promise((resolve, reject) => {
     let newSession: StorageLocalType = {[session["name"]] : session}
     currentStorageLocal = {...currentStorageLocal, ...newSession}
     chrome.storage.local.set({[sessionKeyName] : currentStorageLocal}, () => {
       if(lastErrorMessage("Error saving data to Chrome local storage.")){
-        resolve()
+        resolve(true)
       } else {
         reject(chrome.runtime.lastError)
       }
