@@ -7,7 +7,7 @@ import { setStorageLocal } from "@shared/chrome/storage";
 const SaveSession: React.FC = () => {
   const [name, setName] = useState("hello");
   function saveSession() {
-    getTabs().then((tabs) => {
+    getTabs().then(async (tabs) => {
       if (tabs) {
         let data: any = {};
         for (const tab of tabs) {
@@ -26,7 +26,7 @@ const SaveSession: React.FC = () => {
             name,
             browsers: data,
           };
-          setStorageLocal(session);
+          await setStorageLocal(session);
         }
       }
     });
