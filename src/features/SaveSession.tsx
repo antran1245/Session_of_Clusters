@@ -6,10 +6,14 @@ import { setStorageLocal } from "@shared/chrome/storage";
 import Message from "@components/ui/Message";
 
 const SaveSession: React.FC = () => {
+  // Preset name for Session
   const [name, setName] = useState("hello");
+  // Control showing a message on successful saved of Session
   const [showMessage, setShowMessage] = useState(false);
 
+  // Run on update to showMessage
   useEffect(() => {
+    // Timer to set showMessage as false
     if (showMessage) {
       const timer = setTimeout(() => {
         setShowMessage(false);
@@ -18,9 +22,14 @@ const SaveSession: React.FC = () => {
     }
   }, [showMessage]);
 
+  /**
+   * Save Session onto Storage
+   */
   function saveSession() {
+    // Get all current tabs
     getTabs().then((tabs) => {
       if (tabs) {
+        // Parse all tabs into an object
         let data: any = {};
         for (const tab of tabs) {
           if (tab["url"] !== "") {
@@ -38,6 +47,7 @@ const SaveSession: React.FC = () => {
             name,
             browsers: data,
           };
+          // Store session into storage
           setStorageLocal(session).then((result) => {
             if (result) {
               setShowMessage(true);
