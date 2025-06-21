@@ -1,6 +1,6 @@
 import { lastErrorMessage } from "./helper";
 
-let sessionKeyName: string = "sessions";
+export let sessionKeyName: string = "sessions";
 
 export let currentStorageLocal: StorageLocalType = {}
 
@@ -18,7 +18,7 @@ type SessionType = {
   browsers: BrowserType
 }
 
-type StorageLocalType = {
+export type StorageLocalType = {
   [sessionKey:string]: SessionType
 }
 
