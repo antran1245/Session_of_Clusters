@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import LabelInput from "@components/ui/LabelInput";
 import Button from "@components/ui/Button";
 import { getTabs } from "@shared/chrome/tabs";
-import { setStorageLocal } from "@shared/chrome/storage";
+import { setStorageSession } from "@shared/chrome/storage";
 import Message from "@components/ui/Message";
 
 const SaveSession: React.FC = () => {
@@ -48,7 +48,7 @@ const SaveSession: React.FC = () => {
             browsers: data,
           };
           // Store session into storage
-          setStorageLocal(session).then((result) => {
+          setStorageSession(session).then((result) => {
             if (result) {
               setShowMessage(true);
             }

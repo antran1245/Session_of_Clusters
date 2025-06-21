@@ -1,8 +1,9 @@
-import type { StorageLocalType } from "@shared/chrome/storage";
+import type { StorageSessionType } from "@shared/chrome/storage";
 import React from "react";
+import SessionItem from "./SessionItem";
 
 interface SessionContainerProps {
-  sessions: StorageLocalType;
+  sessions: StorageSessionType;
 }
 
 const SavedSessionContainer: React.FC<SessionContainerProps> = ({
@@ -10,8 +11,8 @@ const SavedSessionContainer: React.FC<SessionContainerProps> = ({
 }) => {
   return (
     <div>
-      {Object.entries(sessions).map(([key], index) => {
-        return <p key={index}>{key}</p>;
+      {Object.values(sessions).map((value, index) => {
+        return <SessionItem key={index} session={value} />;
       })}
     </div>
   );

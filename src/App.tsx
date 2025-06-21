@@ -1,15 +1,16 @@
 import PrintStorage from "@features/PrintStorage";
 import "./App.css";
 import SaveSession from "@features/SaveSession";
-import { useEffect, useState } from "react";
-import { getStorageLocal } from "@shared/chrome/storage";
+import { useEffect } from "react";
+import { getStorageSession } from "@shared/chrome/storage";
 import SavedSessionContainer from "@features/SavedSessionContainer";
+import { useStorageContext } from "@context/StorageContext";
 
 function App() {
-  const [sessions, setSessions] = useState({});
+  const { sessions, setSessions } = useStorageContext();
 
   useEffect(() => {
-    getStorageLocal().then((result) => {
+    getStorageSession().then((result) => {
       if (result) setSessions(result);
     });
   }, []);
