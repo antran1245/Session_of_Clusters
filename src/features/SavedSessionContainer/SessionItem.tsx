@@ -18,13 +18,14 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
    * @param key - Session name to remove
    */
   function deleteSession(key: string) {
+    const copy = sessions;
+    delete copy[key];
     setSessions((prev) => {
       const copy = { ...prev };
       delete copy[key];
       return copy;
     });
-    updateStorageSession(sessions);
-    console.log(sessions);
+    updateStorageSession(copy);
   }
 
   return (
