@@ -68,7 +68,11 @@ const SaveSession: React.FC = () => {
         onChange={(e) => setName(e.target.value)}
       />
       {showMessage && <Message message="Session Saved" />}
-      <Button label="Save Session" onClick={saveSession} />
+      <Button
+        label="Save Session"
+        onClick={saveSession}
+        className="text-xs p-2 mt-1"
+      />
     </form>
   );
 };

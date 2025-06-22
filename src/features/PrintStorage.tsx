@@ -7,14 +7,15 @@ const PrintStorage: React.FC = () => {
    * Print all the sessions by getting the Chrome storage
    */
   function printStorage() {
-    // getStorageSession();
-    // .then((result) => {
-    //   console.log("currentStorageSession: ", currentStorageSession);
-    //   console.log("Result: ", result);
-    // });
     console.log("currentStorageSession: ", currentStorageSession);
   }
-  return <Button label="Print Storage" onClick={printStorage} />;
+  return (
+    <Button
+      label="Print Storage"
+      onClick={printStorage}
+      className="text-xs p-2 mt-1"
+    />
+  );
 };
 
 export default PrintStorage;

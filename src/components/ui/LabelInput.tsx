@@ -8,7 +8,7 @@
  */
 
 import React from "react";
-import clsx from "clsx";
+import { cn } from "@shared/format";
 
 interface LabelProps {
   /**
@@ -68,7 +68,7 @@ const LabelInput: React.FC<LabelProps> = ({
   return (
     <label
       htmlFor={forLabel}
-      className={clsx("flex flex-col text-start", labelClassName)}
+      className={cn("flex flex-col text-start", labelClassName)}
     >
       <p>
         {label}
@@ -77,7 +77,7 @@ const LabelInput: React.FC<LabelProps> = ({
       <input
         type="text"
         name={forLabel}
-        className={clsx("border-1 p-1 rounded-sm", inputClassName)}
+        className={cn("border-1 p-1 rounded-sm", inputClassName)}
         required={required}
         placeholder={placeholder}
         value={value}

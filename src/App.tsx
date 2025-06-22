@@ -7,7 +7,7 @@ import SavedSessionContainer from "@features/SavedSessionContainer";
 import { useStorageContext } from "@context/StorageContext";
 
 function App() {
-  const { sessions, setSessions } = useStorageContext();
+  const { setSessions } = useStorageContext();
 
   useEffect(() => {
     getStorageSession().then((result) => {
@@ -19,7 +19,7 @@ function App() {
       <h1 className="font-bold">Tabmark</h1>
       <SaveSession />
       <PrintStorage />
-      <SavedSessionContainer sessions={sessions} />
+      <SavedSessionContainer />
     </>
   );
 }

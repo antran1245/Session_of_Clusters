@@ -7,7 +7,7 @@
  * <Message message={"Message"} className={"classes"}/>
  */
 import React from "react";
-import clsx from "clsx";
+import { cn } from "@shared/format";
 
 interface MessageProps {
   /**
@@ -21,7 +21,7 @@ interface MessageProps {
 }
 
 const Message: React.FC<MessageProps> = ({ message, className }) => {
-  return <p className={clsx("", className)}>{message}</p>;
+  return <p className={cn("", className)}>{message}</p>;
 };
 
 export default Message;

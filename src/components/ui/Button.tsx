@@ -8,13 +8,13 @@
  */
 
 import React from "react";
-import clsx from "clsx";
+import { cn } from "@shared/format";
 
 interface ButtonProps {
   /**
    * String label to the button.
    */
-  label: string;
+  label?: string;
 
   /**
    * Click event handler.
@@ -25,6 +25,11 @@ interface ButtonProps {
    * Optional additional classes to apply to the button.
    */
   className?: string;
+
+  /**
+   * Optional elements
+   */
+  children?: React.ReactNode;
 }
 
 /**
@@ -35,9 +40,22 @@ interface ButtonProps {
  * @param {ButtonProps} props - Button props
  * @returns JSX Element representing a button.
  */
-const Button: React.FC<ButtonProps> = ({ label, onClick, className }) => {
+const Button: React.FC<ButtonProps> = ({
+  label,
+  onClick,
+  className,
+  children,
+}) => {
   return (
-    <button type="button" onClick={onClick} className={clsx(className)}>
+    <button
+      type="button"
+      onClick={onClick}
+      className={cn(
+        "rounded-lg border border-solid border-transparent py-2.5 px-5 bg-[#1a1a1a] text-base text-medium font-inherit cursor-pointer transition-colors duration-[250ms] hover:border-[#646cff]",
+        className
+      )}
+    >
+      {children}
       {label}
     </button>
   );

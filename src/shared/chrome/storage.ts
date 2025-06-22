@@ -92,3 +92,20 @@ export const removeStorageLocal = (key: string): Promise<void | undefined> => {
     })
   })
 }
+
+/**
+ * Update the current sessions in Chrome Storage
+ * @param sessions - Sessions object
+ * @returns boolean on result of operation
+ */
+export const updateStorageSession = (sessions: StorageSessionType): Promise<boolean | undefined> => {
+  return new Promise((resolve, reject) => {
+    chrome.storage.local.set({[sessionKeyName] : sessions}, () => {
+      if(lastErrorMessage("Error saving data to Chrome local storage.")){
+        resolve(true)
+      } else {
+        reject(chrome.runtime.lastError)
+      }
+    })
+  })
+}
