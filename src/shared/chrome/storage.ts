@@ -24,17 +24,13 @@ export type StorageSessionType = {
 
 /**
  * Retrieve storage data to create session for container or use the data
- * @param createSessionContainer - Boolean to determine if Session container need to be created.
  * @return - Storage or void
  */
-export const getStorageSession = (createSessionContainer:boolean = false): Promise<StorageSessionType | undefined> => {
+export const getStorageSession = (): Promise<StorageSessionType | undefined> => {
   return new Promise((resolve) => {
     chrome.storage.local.get([sessionKeyName], (result) => {
       let data = result[sessionKeyName] ? result[sessionKeyName] : {};
       if (lastErrorMessage("Error retrieving data from Chrome local storage.")) {
-        if (createSessionContainer) {
-          console.log("create sessions within container")
-        }
         currentStorageSession = data
         resolve(data)
         }

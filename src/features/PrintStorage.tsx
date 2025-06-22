@@ -1,4 +1,4 @@
-import Button from "@components/ui/Button";
+import { Button } from "@components/ui";
 import { currentStorageSession } from "@shared/chrome/storage";
 import React from "react";
 
