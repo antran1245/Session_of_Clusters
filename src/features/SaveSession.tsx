@@ -2,12 +2,15 @@ import React, { useEffect, useState } from "react";
 import { getTabs } from "@shared/chrome/tabs";
 import { setStorageSession } from "@shared/chrome/storage";
 import { LabelInput, Button, Message } from "@components/ui";
+import { useStorageContext } from "@context/StorageContext";
 
 const SaveSession: React.FC = () => {
   // Preset name for Session
   const [name, setName] = useState("hello");
   // Control showing a message on successful saved of Session
   const [showMessage, setShowMessage] = useState(false);
+
+  const { setSessions } = useStorageContext();
 
   // Run on update to showMessage
   useEffect(() => {
@@ -48,6 +51,7 @@ const SaveSession: React.FC = () => {
           // Store session into storage
           setStorageSession(session).then((result) => {
             if (result) {
+              setSessions((prev) => ({ ...prev, [session.name]: session }));
               setShowMessage(true);
             }
           });
