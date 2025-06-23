@@ -6,7 +6,7 @@ import { useStorageContext } from "@context/StorageContext";
 
 const SaveSession: React.FC = () => {
   // Preset name for Session
-  const [name, setName] = useState("hello");
+  const [name, setName] = useState("R2BC");
   // Control showing a message on successful saved of Session
   const [showMessage, setShowMessage] = useState(false);
 
@@ -63,11 +63,12 @@ const SaveSession: React.FC = () => {
   return (
     <form>
       <LabelInput
-        label="Name"
+        label="Session Name"
         forLabel="name"
         required={true}
         value={name}
         onChange={(e) => setName(e.target.value)}
+        inputClassName="mb-3"
       />
       {showMessage && <Message message="Session Saved" />}
       <Button

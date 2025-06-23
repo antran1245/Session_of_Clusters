@@ -1,0 +1,6 @@
+#options-container {
+  position: absolute;
+  top: anchor(top);
+  left: anchor(left);
+  transform: translateX(-100%);
+}

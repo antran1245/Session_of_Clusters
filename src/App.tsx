@@ -1,10 +1,11 @@
-import PrintStorage from "@features/PrintStorage";
 import "./App.css";
-import SaveSession from "@features/SaveSession";
 import { useEffect } from "react";
 import { getStorageSession } from "@shared/chrome/storage";
-import SavedSessionContainer from "@features/SavedSessionContainer";
 import { useStorageContext } from "@context/StorageContext";
+import PrintStorage from "@features/PrintStorage";
+import SaveSession from "@features/SaveSession";
+import SavedSessionContainer from "@features/SavedSessionContainer";
+import OptionsPopover from "@features/OptionsPopover";
 
 function App() {
   const { setSessions } = useStorageContext();
@@ -16,10 +17,15 @@ function App() {
   }, []);
   return (
     <>
-      <h1 className="font-bold">Tabmark</h1>
-      <SaveSession />
-      <PrintStorage />
-      <SavedSessionContainer />
+      <div className="flex flex-row justify-end mt-1">
+        <OptionsPopover />
+      </div>
+      <div className="pb-3 w-[80%] mx-auto">
+        <h1 className="font-bold mb-3">Tabmark</h1>
+        <SaveSession />
+        <PrintStorage />
+        <SavedSessionContainer />
+      </div>
     </>
   );
 }
