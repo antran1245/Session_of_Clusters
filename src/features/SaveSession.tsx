@@ -3,6 +3,7 @@ import { getTabs } from "@shared/chrome/tabs";
 import { setStorageSession } from "@shared/chrome/storage";
 import { LabelInput, Button, Message } from "@components/ui";
 import { useStorageContext } from "@context/StorageContext";
+import SaveSelectedWindows from "./SaveSelectedWindows";
 
 const SaveSession: React.FC = () => {
   // Preset name for Session
@@ -71,11 +72,14 @@ const SaveSession: React.FC = () => {
         inputClassName="mb-3"
       />
       {showMessage && <Message message="Session Saved" />}
-      <Button
-        label="Save Session"
-        onClick={saveSession}
-        className="text-xs p-2 mt-1"
-      />
+      <div className="flex flex-row gap-2">
+        <Button
+          label="Save Session"
+          onClick={saveSession}
+          className="text-xs p-2 mt-1"
+        />
+        <SaveSelectedWindows name={name} />
+      </div>
     </form>
   );
 };
