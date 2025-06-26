@@ -1,14 +1,18 @@
 {
   "manifest_version": 3,
-  "name": "My React Chrome Extension",
+  "name": "Tabmark",
   "version": "1.0.0",
-  "description": "A Chrome extension built with Vite and React.",
+  "description": "A Chrome extension built to manage tabs by saving them for another time.",
   "action": {
     "default_popup": "index.html"
   },
   "permissions": [
     "tabs",
     "storage",
-    "windows"
+    "windows",
+    "activeTab"
+  ],
+  "host_permissions": [
+    "<all_urls>"
   ]
 }
