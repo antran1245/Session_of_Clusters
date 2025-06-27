@@ -52,7 +52,7 @@ const Button: React.FC<ButtonProps> = ({
       type="button"
       onClick={onClick}
       className={cn(
-        "rounded-lg border border-solid border-transparent py-2.5 px-5 bg-[#1a1a1a] text-base text-medium font-inherit cursor-pointer transition-colors duration-[250ms] hover:border-[#646cff] focus:outline focus:outline-2 focus:outline-white-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white-300",
+        "rounded-lg border border-solid border-transparent py-2.5 px-5 bg-[#7F8CAA] text-medium font-inherit cursor-pointer transition-colors duration-[250ms] hover:border-[#646cff] focus:outline focus:outline-2 focus:outline-white-300 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white-300",
         className
       )}
       {...props}

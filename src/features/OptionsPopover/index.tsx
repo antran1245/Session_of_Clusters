@@ -2,7 +2,7 @@ import { Button } from "@components/ui";
 import ellipseIcon from "@assets/ellipsis-vertical-solid.svg";
 import "./style.css";
 import React from "react";
-import ClearSession from "@features/ClearSession";
+import ClearSession from "@features/OptionsPopover/ClearSession";
 
 const OptionsPopover: React.FC = () => {
   return (
@@ -20,7 +20,7 @@ const OptionsPopover: React.FC = () => {
         id="options-container"
         popover="auto"
         {...{ anchor: "options-button" }}
-        className="border rounded border-white-500 w-3/4"
+        className="border rounded border-white-500 w-1/2"
       >
         <div className="w-full flex flex-col justify-start">
           <ClearSession />

@@ -2,9 +2,8 @@ import "./App.css";
 import { useEffect } from "react";
 import { getStorageSession } from "@shared/chrome/storage";
 import { useStorageContext } from "@context/StorageContext";
-import PrintStorage from "@features/PrintStorage";
-import SaveSession from "@features/SaveSession";
-import SavedSessionContainer from "@features/SavedSessionContainer";
+import SaveSession from "@features/SavedSession";
+import SavedSessionList from "@features/SavedSessionList";
 import OptionsPopover from "@features/OptionsPopover";
 
 function App() {
@@ -23,8 +22,7 @@ function App() {
       <div className="pb-3 w-[80%] mx-auto">
         <h1 className="font-bold mb-3">Tabmark</h1>
         <SaveSession />
-        <PrintStorage />
-        <SavedSessionContainer />
+        <SavedSessionList />
       </div>
     </>
   );

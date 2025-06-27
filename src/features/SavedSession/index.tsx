@@ -73,11 +73,7 @@ const SaveSession: React.FC = () => {
       />
       {showMessage && <Message message="Session Saved" />}
       <div className="flex flex-row gap-2">
-        <Button
-          label="Save Session"
-          onClick={saveSession}
-          className="text-xs p-2 mt-1"
-        />
+        <Button label="Save Session" onClick={saveSession} className="p-2" />
         <SaveSelectedWindows name={name} />
       </div>
     </form>

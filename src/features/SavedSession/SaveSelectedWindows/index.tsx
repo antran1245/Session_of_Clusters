@@ -101,7 +101,7 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
         popoverTargetAction="toggle"
         label="Save Selected Windows"
         onClick={showActiveTabs}
-        className="text-sm p-2"
+        className="p-2"
       />
       <div
         id="save-selected-windows-container"
