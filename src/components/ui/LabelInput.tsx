@@ -45,6 +45,10 @@ interface LabelProps {
    * Optional styling for input
    */
   inputClassName?: string;
+  /**
+   * Optional Message
+   */
+  messageComponent?: React.ReactNode;
 }
 
 /**
@@ -64,16 +68,20 @@ const LabelInput: React.FC<LabelProps> = ({
   placeholder = "",
   labelClassName,
   inputClassName,
+  messageComponent,
 }) => {
   return (
     <label
       htmlFor={forLabel}
       className={cn("flex flex-col text-start", labelClassName)}
     >
-      <p>
-        {label}
-        <span className="text-red-500">{required && "*"}</span>
-      </p>
+      <div className="flex gap-4">
+        <p>
+          {label}
+          <span className="text-red-500">{required && "*"}</span>
+        </p>
+        {messageComponent}
+      </div>
       <input
         type="text"
         name={forLabel}

@@ -106,10 +106,10 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
       <div
         id="save-selected-windows-container"
         popover="auto"
-        className="w-[90%] h-[90%] border rounded border-white-500"
+        className="w-[90%] h-[90%] rounded bg-[#595a78]"
       >
         <div className="flex flex-col gap-2 p-2">
-          <div className="flex flex-wrap gap-2 max-h-[200px] border border-white-300 rounded overflow-y-auto">
+          <div className="flex flex-wrap gap-2 max-h-[200px] bg-[#7F8CAA] rounded overflow-y-auto p-2">
             {activeTabsImage.map((item, index) => {
               return (
                 <div key={index} className="flex flex-col">
@@ -132,13 +132,22 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
               );
             })}
           </div>
-          <Button
-            label="Save"
-            onClick={() => {
-              SaveSelectedWindows();
-            }}
-            className="w-fit p-2 self-end"
-          />
+          <div className="self-end flex gap-2 flex-wrap">
+            <Button
+              label="Save"
+              onClick={() => {
+                SaveSelectedWindows();
+              }}
+              className="w-fit p-2"
+            />
+            <Button
+              label="Close"
+              popoverTarget="save-selected-windows-container"
+              popoverTargetAction="toggle"
+              onClick={() => {}}
+              className="w-fit p-2"
+            />
+          </div>
         </div>
       </div>
     </>

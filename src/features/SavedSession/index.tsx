@@ -70,8 +70,12 @@ const SaveSession: React.FC = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         inputClassName="mb-3"
+        messageComponent={
+          showMessage && (
+            <Message message="Session Saved" className="font-bold" />
+          )
+        }
       />
-      {showMessage && <Message message="Session Saved" />}
       <div className="flex flex-row gap-2">
         <Button label="Save Session" onClick={saveSession} className="p-2" />
         <SaveSelectedWindows name={name} />

@@ -1,8 +1,8 @@
 {
   "manifest_version": 3,
   "name": "Tabmark",
-  "version": "1.0.0",
-  "description": "A Chrome extension built to manage tabs by saving them for another time.",
+  "version": "0.0.0.1",
+  "description": "A Chrome extension built to manage tabs by allowing users to save them for another time.",
   "action": {
     "default_popup": "index.html"
   },
@@ -14,5 +14,11 @@
   ],
   "host_permissions": [
     "<all_urls>"
-  ]
+  ],
+  "icons": {
+    "16": "icons/tabmarkIcon_16.png",
+    "32": "icons/tabmarkIcon_32.png",
+    "48": "icons/tabmarkIcon_48.png",
+    "128": "icons/tabmarkIcon_128.png"
+  }
 }

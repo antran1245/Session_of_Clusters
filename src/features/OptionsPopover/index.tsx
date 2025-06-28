@@ -20,7 +20,7 @@ const OptionsPopover: React.FC = () => {
         id="options-container"
         popover="auto"
         {...{ anchor: "options-button" }}
-        className="border rounded border-white-500 w-1/2"
+        className="border rounded border-white-500 w-1/2 bg-[#595a78]"
       >
         <div className="w-full flex flex-col justify-start">
           <ClearSession />
