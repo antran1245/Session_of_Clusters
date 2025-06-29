@@ -21,7 +21,7 @@ interface SessionContainerProps {
 
 const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
   const { sessions, setSessions } = useStorageContext();
-  const { onSessionOpen } = useSettingsContext();
+  const { settings } = useSettingsContext();
 
   /**
    * Delete a session from the store sessions and update the Chrome storage
@@ -62,6 +62,9 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
       })
       .then((windows: chrome.windows.Window[] | undefined) => {
         // Close all the currently open window(s)
+        const onSessionOpen = settings["onSessionOpen"]
+          ? settings["onSessionOpen"].value
+          : "";
         if (windows && onSessionOpen === "close") closeCurrentWindows(windows);
         if (onSessionOpen === "save") console.log("save");
       });

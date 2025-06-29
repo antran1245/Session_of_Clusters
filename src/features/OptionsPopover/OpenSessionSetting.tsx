@@ -4,10 +4,17 @@ import React, { useState } from "react";
 
 const OpenSessionSetting: React.FC = () => {
   const [selected, setSelected] = useState<string>("close");
-  const { setOnSessionOpen } = useSettingsContext();
+  const { setSettings } = useSettingsContext();
 
   function handleSelect(event: React.ChangeEvent<HTMLInputElement>) {
-    setOnSessionOpen(event.target.value);
+    let onSessionOpenSetting = {
+      value: event.target.value,
+      firstTime: false,
+    };
+    setSettings((prev) => ({
+      ...prev,
+      onSessionOpen: onSessionOpenSetting,
+    }));
     setSelected(event.target.value);
   }
 

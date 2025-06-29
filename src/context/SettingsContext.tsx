@@ -1,8 +1,9 @@
+import type { SettingType } from "@shared/chrome/storage";
 import React, { createContext, useContext, useState } from "react";
 
 type SettingsContextType = {
-  onSessionOpen: string;
-  setOnSessionOpen: React.Dispatch<React.SetStateAction<string>>;
+  settings: SettingType;
+  setSettings: React.Dispatch<React.SetStateAction<SettingType>>;
 };
 
 const SettingsContext = createContext<SettingsContextType | undefined>(
@@ -14,9 +15,9 @@ export const SettingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [onSessionOpen, setOnSessionOpen] = useState<string>("close");
+  const [settings, setSettings] = useState<SettingType>({});
   return (
-    <SettingsContext.Provider value={{ onSessionOpen, setOnSessionOpen }}>
+    <SettingsContext.Provider value={{ settings, setSettings }}>
       {children}
     </SettingsContext.Provider>
   );

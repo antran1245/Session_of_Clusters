@@ -72,9 +72,3 @@ export const updateStorageSession = (sessions: StorageSessionType): Promise<bool
     })
   })
 }
-
-export const saveStorageSetting = (): Promise<boolean | undefined> => {
-  return new Promise((resolve, reject) => {
-
-  })
-}

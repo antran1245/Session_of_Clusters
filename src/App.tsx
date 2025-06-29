@@ -1,17 +1,37 @@
 import "./App.css";
 import { useEffect } from "react";
-import { getStorageSession } from "@shared/chrome/storage";
+import {
+  getStorageSession,
+  getStorageSetting,
+  setStorageSetting,
+} from "@shared/chrome/storage";
 import { useStorageContext } from "@context/StorageContext";
 import SaveSession from "@features/SavedSession";
 import SavedSessionList from "@features/SavedSessionList";
 import OptionsPopover from "@features/OptionsPopover";
+import { useSettingsContext } from "@context/SettingsContext";
 
 function App() {
   const { setSessions } = useStorageContext();
+  const { setSettings } = useSettingsContext();
 
   useEffect(() => {
     getStorageSession().then((result) => {
       if (result) setSessions(result);
+    });
+    getStorageSetting().then((result) => {
+      if (result && Object.keys(result).length > 0) {
+        setSettings(result);
+      } else {
+        let initialSetting = {
+          onSessionOpen: {
+            value: "close",
+            firstTime: true,
+          },
+        };
+        setSettings(initialSetting);
+        setStorageSetting(initialSetting);
+      }
     });
   }, []);
   return (

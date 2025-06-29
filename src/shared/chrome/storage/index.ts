@@ -1,4 +1,5 @@
-export * from './storage'
+export * from './session'
+export * from './settings'
 
 import { lastErrorMessage } from "@shared/chrome/helpers"
 
