@@ -10,7 +10,7 @@
 import React from "react";
 import { cn } from "@shared/format";
 
-interface LabelProps {
+interface LabelProps extends React.InputHTMLAttributes<HTMLInputElement> {
   /**
    * Label the input form
    */
@@ -19,24 +19,6 @@ interface LabelProps {
    * Specify purpose for input
    */
   forLabel: string;
-  /**
-   * Input value
-   */
-  value: string;
-  /**
-   * Handler for input event
-   * @param event - action
-   * @returns
-   */
-  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
-  /**
-   * Optional required
-   */
-  required?: boolean;
-  /**
-   * Optional Input placholder
-   */
-  placeholder?: string;
   /**
    * Optional styling for label
    */
@@ -62,13 +44,11 @@ interface LabelProps {
 const LabelInput: React.FC<LabelProps> = ({
   label,
   forLabel,
-  value = "",
-  onChange,
   required = false,
-  placeholder = "",
   labelClassName,
   inputClassName,
   messageComponent,
+  ...inputProps
 }) => {
   return (
     <label
@@ -87,9 +67,7 @@ const LabelInput: React.FC<LabelProps> = ({
         name={forLabel}
         className={cn("border-1 p-1 rounded-sm", inputClassName)}
         required={required}
-        placeholder={placeholder}
-        value={value}
-        onChange={onChange}
+        {...inputProps}
       />
     </label>
   );
