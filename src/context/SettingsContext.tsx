@@ -14,7 +14,7 @@ export const SettingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [onSessionOpen, setOnSessionOpen] = useState("");
+  const [onSessionOpen, setOnSessionOpen] = useState<string>("close");
   return (
     <SettingsContext.Provider value={{ onSessionOpen, setOnSessionOpen }}>
       {children}

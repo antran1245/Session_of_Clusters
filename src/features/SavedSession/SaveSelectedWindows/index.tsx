@@ -8,6 +8,7 @@ import React, { useState } from "react";
 import "./style.css";
 import { setStorageSession } from "@shared/chrome/storage";
 import { useStorageContext } from "@context/StorageContext";
+import { createSaveWindowsObject } from "@shared/helpers";
 
 type ImageTab = chrome.tabs.Tab & {
   image?: string;
@@ -64,18 +65,7 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
     getTabs().then((tabs) => {
       if (tabs) {
         // Parse all tabs into an object
-        let data: any = {};
-        for (const tab of tabs) {
-          if (tab["url"] !== "" && selectedWindows.includes(tab.windowId)) {
-            const title = tab["title"] ? tab["title"] : tab["url"];
-            const url = tab["url"];
-            const urlData = { title, url };
-            data[String(tab["windowId"])] =
-              String(tab["windowId"]) in data
-                ? [...data[String(tab["windowId"])], urlData]
-                : [urlData];
-          }
-        }
+        let data = createSaveWindowsObject(tabs, selectedWindows);
         if (Object.keys(data).length > 0) {
           let session = {
             name,

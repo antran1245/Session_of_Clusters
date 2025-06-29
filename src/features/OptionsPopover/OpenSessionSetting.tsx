@@ -1,10 +1,13 @@
 import { LabelRadio } from "@components/ui";
+import { useSettingsContext } from "@context/SettingsContext";
 import React, { useState } from "react";
 
 const OpenSessionSetting: React.FC = () => {
   const [selected, setSelected] = useState<string>("close");
+  const { setOnSessionOpen } = useSettingsContext();
 
   function handleSelect(event: React.ChangeEvent<HTMLInputElement>) {
+    setOnSessionOpen(event.target.value);
     setSelected(event.target.value);
   }
 
