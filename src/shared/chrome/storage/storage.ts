@@ -1,4 +1,4 @@
-import { lastErrorMessage } from "./helper";
+import { lastErrorMessage } from "../helpers";
 
 export let sessionKeyName: string = "sessions";
 
@@ -57,39 +57,6 @@ export const setStorageSession = (session: SessionType): Promise<boolean | undef
 }
 
 /**
- * Clear all data from Chrome Storage.
- */
-export const clearStorageLocal = (): Promise<void | undefined> => {
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.clear(() => {
-      if(lastErrorMessage("Error clearing all data from Chrome storage.")) {
-        console.log("Chrome Storage cleared of all data.")
-        resolve()
-      } else {
-        reject(chrome.runtime.lastError)
-      }
-    })
-  })
-}
-
-/**
- * Remove a selected data from Chrome Storage.
- * @param key - A key to remove from the Chrome Storage.
- */
-export const removeStorageLocal = (key: string): Promise<void | undefined> => {
-  return new Promise((resolve, reject) => {
-    chrome.storage.local.remove(key, () => {
-      if(lastErrorMessage("Error removing data from Chrome storage.")) {
-        console.log("Chrome Storage remove selected data.")
-        resolve()
-      } else {
-        reject(chrome.runtime.lastError)
-      }
-    })
-  })
-}
-
-/**
  * Update the current sessions in Chrome Storage
  * @param sessions - Sessions object
  * @returns boolean on result of operation
@@ -103,5 +70,11 @@ export const updateStorageSession = (sessions: StorageSessionType): Promise<bool
         reject(chrome.runtime.lastError)
       }
     })
+  })
+}
+
+export const saveStorageSetting = (): Promise<boolean | undefined> => {
+  return new Promise((resolve, reject) => {
+
   })
 }
