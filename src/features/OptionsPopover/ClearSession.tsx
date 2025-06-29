@@ -1,6 +1,6 @@
 import { Button } from "@components/ui";
 import { useStorageContext } from "@context/StorageContext";
-import { clearStorageLocal } from "@shared/chrome/storage";
+import { removeStorageLocal, sessionKeyName } from "@shared/chrome/storage";
 import React from "react";
 
 const ClearSession: React.FC = () => {
@@ -9,7 +9,7 @@ const ClearSession: React.FC = () => {
     <Button
       label="Delete All Sessions"
       onClick={async () => {
-        await clearStorageLocal();
+        await removeStorageLocal(sessionKeyName);
         setSessions({});
       }}
       className="flex w-fit text-md bg-transparent border-none hover:underline focus:outline-none focus-visible:outline-none focus:underline focus:font-bold"
