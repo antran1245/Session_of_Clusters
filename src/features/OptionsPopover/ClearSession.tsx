@@ -14,7 +14,7 @@ const ClearSession: React.FC = () => {
         });
         event.currentTarget.blur();
       }}
-      className="flex w-fit text-md bg-transparent border-none hover:underline focus:outline-none focus-visible:outline-none focus:underline focus:font-bold"
+      className="flex w-fit text-md bg-transparent border-none p-0 hover:underline focus:outline-none focus-visible:outline-none focus:underline focus:font-bold"
     />
   );
 };
