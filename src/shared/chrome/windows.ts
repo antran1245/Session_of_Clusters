@@ -1,4 +1,4 @@
-import { lastErrorMessage } from "./helper";
+import { lastErrorMessage } from "./helpers";
 
 /**
  * Return a list of windows currently open

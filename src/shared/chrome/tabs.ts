@@ -1,4 +1,4 @@
-import { lastErrorPromise } from "./helper"
+import { lastErrorPromise } from "./helpers"
 
 /**
  * Retrieve an array of currently open URLs on Chrome browsers
