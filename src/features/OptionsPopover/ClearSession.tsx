@@ -8,9 +8,11 @@ const ClearSession: React.FC = () => {
   return (
     <Button
       label="Delete All Sessions"
-      onClick={async () => {
-        await removeStorageLocal(sessionKeyName);
-        setSessions({});
+      onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
+        removeStorageLocal(sessionKeyName).then(() => {
+          setSessions({});
+        });
+        event.currentTarget.blur();
       }}
       className="flex w-fit text-md bg-transparent border-none hover:underline focus:outline-none focus-visible:outline-none focus:underline focus:font-bold"
     />
