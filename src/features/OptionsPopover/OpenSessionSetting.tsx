@@ -1,21 +1,29 @@
 import { LabelRadio } from "@components/ui";
 import { useSettingsContext } from "@context/SettingsContext";
-import React, { useState } from "react";
+import { setStorageSetting } from "@shared/chrome/storage";
+import React, { useEffect, useState } from "react";
 
 const OpenSessionSetting: React.FC = () => {
+  const { settings, setSettings } = useSettingsContext();
   const [selected, setSelected] = useState<string>("close");
-  const { setSettings } = useSettingsContext();
+
+  useEffect(() => {
+    if (settings && settings["onSessionOpen"])
+      setSelected(settings["onSessionOpen"].value);
+  }, [settings]);
 
   function handleSelect(event: React.ChangeEvent<HTMLInputElement>) {
-    let onSessionOpenSetting = {
+    const onSessionOpenSetting = {
       value: event.target.value,
       firstTime: false,
     };
+    const updateSetting = { ...settings, onSessionOpen: onSessionOpenSetting };
     setSettings((prev) => ({
       ...prev,
       onSessionOpen: onSessionOpenSetting,
     }));
     setSelected(event.target.value);
+    setStorageSetting(updateSetting);
   }
 
   return (
