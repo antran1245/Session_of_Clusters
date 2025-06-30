@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
-  "name": "Tabmark",
-  "version": "0.0.0.1",
+  "name": "Tabmark(beta)",
+  "version": "0.0.0.2",
   "description": "A Chrome extension built to manage tabs by allowing users to save them for another time.",
   "action": {
     "default_popup": "index.html"
