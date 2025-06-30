@@ -11,15 +11,16 @@ type URLType = {
   url: string;
 }
 export type BrowserType = {
-  [id: string]: URLType[]
+  [id: string]: URLType[];
 }
 export type SessionType = {
   name: string;
-  browsers: BrowserType
+  browsers: BrowserType;
+  date: Date
 }
 
 export type StorageSessionType = {
-  [sessionKey:string]: SessionType
+  [sessionKey:string]: SessionType;
 }
 
 /**

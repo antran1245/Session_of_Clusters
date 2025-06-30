@@ -3,6 +3,7 @@ import { Button } from "@components/ui";
 import arrowOpenIcon from "@assets/arrow-up-right-from-square-solid.svg";
 import trashIcon from "@assets/trash-solid.svg";
 import {
+  setStorageSession,
   updateStorageSession,
   type BrowserType,
   type SessionType,
@@ -14,6 +15,9 @@ import {
   createWindowsWithTabs,
   getCurrentWindows,
 } from "@shared/chrome/windows";
+import { formatDataTime } from "@shared/format";
+import { getTabs } from "@shared/chrome/tabs";
+import { createSaveSessionObject } from "@shared/helpers";
 
 interface SessionContainerProps {
   session: SessionType;
@@ -36,6 +40,32 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
       return copy;
     });
     updateStorageSession(copy);
+  }
+
+  /**
+   * Save Session onto Storage
+   */
+  function saveSession(name: string) {
+    // Get all current tabs
+    getTabs().then((tabs) => {
+      if (tabs) {
+        // Parse all tabs into an object
+        let data = createSaveSessionObject(tabs);
+        if (Object.keys(data).length > 0) {
+          let session = {
+            name,
+            browsers: data,
+            date: new Date(),
+          };
+          // Store session into storage
+          setStorageSession(session).then((result) => {
+            if (result) {
+              setSessions((prev) => ({ ...prev, [session.name]: session }));
+            }
+          });
+        }
+      }
+    });
   }
 
   /**
@@ -65,8 +95,14 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
         const onSessionOpen = settings["onSessionOpen"]
           ? settings["onSessionOpen"].value
           : "";
-        if (windows && onSessionOpen === "close") closeCurrentWindows(windows);
-        if (onSessionOpen === "save") console.log("save");
+        if (windows) {
+          if (onSessionOpen === "close") closeCurrentWindows(windows);
+          if (onSessionOpen === "save") {
+            const date = new Date();
+            const name = "Session " + formatDataTime(date);
+            saveSession(name);
+          }
+        }
       });
   }
 

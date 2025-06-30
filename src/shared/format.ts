@@ -26,3 +26,15 @@ export function saveSessionData(tab:chrome.tabs.Tab, data: any) {
       : [urlData];
   return data
 }
+
+export function formatDataTime(date:Date) {
+  const formatted = new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: '2-digit',
+    timeZoneName: 'short',
+  }).format(date);
+  return formatted
+}

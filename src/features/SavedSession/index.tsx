@@ -38,6 +38,7 @@ const SaveSession: React.FC = () => {
           let session = {
             name,
             browsers: data,
+            date: new Date(),
           };
           // Store session into storage
           setStorageSession(session).then((result) => {
