@@ -125,6 +125,8 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
           <div className="self-end flex gap-2 flex-wrap">
             <Button
               label="Save"
+              popoverTarget="save-selected-windows-container"
+              popoverTargetAction="toggle"
               onClick={() => {
                 SaveSelectedWindows();
               }}
