@@ -28,7 +28,9 @@ const OpenSessionSetting: React.FC = () => {
 
   return (
     <fieldset className="flex flex-col gap-1 justify-items-start">
-      <legend className="text-left mb-1">On Opening of a Session:</legend>
+      <legend className="text-left mb-1 font-medium">
+        On Opening of a Session:
+      </legend>
       <LabelRadio
         label="Close all current windows."
         value={"close"}

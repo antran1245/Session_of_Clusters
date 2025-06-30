@@ -109,6 +109,7 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
                       name={`checkbox-${index}`}
                       checked={isSelected(item.windowId)}
                       onChange={() => toggleWindow(item)}
+                      className="w-4 h-4 accent-blue-800 bg-white rounded"
                     />
                     <label>Window {index + 1}</label>
                   </div>

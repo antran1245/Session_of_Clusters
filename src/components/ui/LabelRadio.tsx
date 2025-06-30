@@ -18,8 +18,12 @@ interface LabelRadioProps extends React.InputHTMLAttributes<HTMLInputElement> {
 
 const LabelRadio: React.FC<LabelRadioProps> = ({ label, ...inputProps }) => {
   return (
-    <label className="w-fit">
-      <input type="radio" {...inputProps} />
+    <label className="w-fit flex flex-row items-center gap-2">
+      <input
+        type="radio"
+        {...inputProps}
+        className="w-4 h-4 accent-blue-800 bg-white"
+      />
       {label}
     </label>
   );
