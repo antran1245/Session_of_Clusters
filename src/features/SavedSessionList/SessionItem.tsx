@@ -15,7 +15,7 @@ import {
   createWindowsWithTabs,
   getCurrentWindows,
 } from "@shared/chrome/windows";
-import { formatDataTime } from "@shared/format";
+import { formatDataTime, timeAgo } from "@shared/format";
 import { getTabs } from "@shared/chrome/tabs";
 import { createSaveSessionObject } from "@shared/helpers";
 
@@ -45,7 +45,7 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
   /**
    * Save Session onto Storage
    */
-  function saveSession(name: string) {
+  function saveSession(name: string, date: string) {
     // Get all current tabs
     getTabs().then((tabs) => {
       if (tabs) {
@@ -55,7 +55,7 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
           let session = {
             name,
             browsers: data,
-            date: new Date(),
+            date,
           };
           // Store session into storage
           setStorageSession(session).then((result) => {
@@ -98,9 +98,9 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
         if (windows) {
           if (onSessionOpen === "close") closeCurrentWindows(windows);
           if (onSessionOpen === "save") {
-            const date = new Date();
+            const date = new Date().toISOString();
             const name = "Session " + formatDataTime(date);
-            saveSession(name);
+            saveSession(name, date);
           }
         }
       });
@@ -108,10 +108,17 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
 
   return (
     <div
-      className={"flex flex-row justify-between items-center border-b-1 p-1"}
+      className={
+        "flex flex-row gap-3 justify-between items-end border-b-1 p-1 px-0"
+      }
     >
-      <p className="text-sm cursor-pointer truncate">{session.name}</p>
-      <div className="flex flex-row gap-1">
+      <div className="flex-1 min-w-0 flex flex-row justify-between items-end">
+        <p className="text-sm h-fit w-9/12 cursor-pointer truncate overflow-hidden whitespace-nowrap align-bottom text-left">
+          {session.name}
+        </p>
+        <p className="text-xs">{timeAgo(session.date)}</p>
+      </div>
+      <div className="flex flex-row gap-1 w-fit">
         <Button
           onClick={() => {
             openSession(session.browsers);

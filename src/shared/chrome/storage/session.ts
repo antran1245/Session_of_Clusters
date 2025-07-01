@@ -16,7 +16,7 @@ export type BrowserType = {
 export type SessionType = {
   name: string;
   browsers: BrowserType;
-  date: Date
+  date: string;
 }
 
 export type StorageSessionType = {

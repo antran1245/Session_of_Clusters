@@ -70,7 +70,7 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
           let session = {
             name,
             browsers: data,
-            date: new Date(),
+            date: new Date().toISOString(),
           };
           // Store session into storage
           setStorageSession(session).then((result) => {

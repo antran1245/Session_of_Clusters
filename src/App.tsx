@@ -39,7 +39,7 @@ function App() {
       <div className="flex flex-row justify-end mt-1">
         <OptionsPopover />
       </div>
-      <div className="pb-3 w-[80%] mx-auto">
+      <div className="pb-3 w-[85%] mx-auto">
         <h1 className="font-bold mb-3">Tabmark</h1>
         <SaveSession />
         <SavedSessionList />
