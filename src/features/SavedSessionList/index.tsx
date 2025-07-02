@@ -18,14 +18,16 @@ const SavedSessionContainer: React.FC = () => {
   }, [sessions]);
 
   return (
-    <div className="flex flex-col w-[544px] gap-1 mt-1">
+    <div className="flex flex-col flex-1 gap-1 mt-1">
       <p className="text-bold text-md text-left">
         {sessionsList.length > 0 && "Saved Session"}
         {sessionsList.length > 1 && "s"}
       </p>
-      {sessionsList.map((value, index) => {
-        return <SessionItem key={index} session={value} />;
-      })}
+      <div className="max-h-[125px] overflow-auto pr-1">
+        {sessionsList.map((value, index) => {
+          return <SessionItem key={index} session={value} />;
+        })}
+      </div>
     </div>
   );
 };
