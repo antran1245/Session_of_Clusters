@@ -7,12 +7,14 @@ import SaveSelectedWindows from "./SaveSelectedWindows";
 import { createSaveSessionObject } from "@shared/helpers";
 
 const SaveSession: React.FC = () => {
+  // Global settings to the Sessions
+  const { setSessions } = useStorageContext();
   // Preset name for Session
   const [name, setName] = useState("R2BC");
   // Control showing a message on successful saved of Session
   const [showMessage, setShowMessage] = useState(false);
-
-  const { setSessions } = useStorageContext();
+  // Display the number of char for Session name
+  const [wordCount, setWordCount] = useState<number>(0);
 
   // Run on update to showMessage
   useEffect(() => {
@@ -24,6 +26,10 @@ const SaveSession: React.FC = () => {
       return () => clearTimeout(timer);
     }
   }, [showMessage]);
+
+  useEffect(() => {
+    setWordCount(name.length);
+  }, [name]);
 
   /**
    * Save Session onto Storage
@@ -61,10 +67,14 @@ const SaveSession: React.FC = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         inputClassName="mb-3"
+        maxLength={90}
         messageComponent={
-          showMessage && (
-            <Message message="Session Saved" className="font-bold" />
-          )
+          <div className={`flex flex-row flex-1`}>
+            {showMessage && (
+              <Message message="Session Saved" className="font-bold" />
+            )}
+            <p className="ml-auto">{wordCount}/90</p>
+          </div>
         }
       />
       <div className="flex flex-row gap-2">
