@@ -2,10 +2,21 @@ import { lastErrorMessage } from "../helpers";
 
 export const settingsName = "settings"
 
+export let initialSetting = {
+  onSessionOpen: {
+    value: "close",
+    firstTime: true,
+  },
+  overwriteSessionName: {
+    value: false,
+    firstTime: true
+  }
+};
+
 // Data types
 
 type SettingItemType = {
-  value: string;
+  value: string | boolean;
   firstTime?: boolean;
 }
 
