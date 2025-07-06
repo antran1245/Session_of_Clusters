@@ -28,7 +28,7 @@ export const closeCurrentWindows = (windows:chrome.windows.Window[]): void => {
 }
 
 /**
- * 
+ * Create window(s) with an array of tab(s) that was saved
  * @param urls - URLs array to open tabs
  */
 export const createWindowsWithTabs = (urls:string[]): void => {
@@ -47,4 +47,13 @@ export const createWindowsWithTabs = (urls:string[]): void => {
       if (tabs && tabs.length > 0 && tabs[0].id) chrome.tabs.remove(tabs[0].id)
     })
   })
+}
+
+/**
+ * Create a window with a google.com tab
+ */
+export const createBlankWindow = (): void => {
+    chrome.windows.create({state: "maximized", url: "http://www.google.com"}, () => {
+      lastErrorMessage("Error creating a blank window.")
+    })
 }
