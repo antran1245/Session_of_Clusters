@@ -1,9 +1,9 @@
+import React from "react";
 import { Button } from "@components/ui";
 import ellipseIcon from "@assets/ellipsis-vertical-solid.svg";
 import "./style.css";
-import React from "react";
-import ClearSession from "@features/OptionsPopover/ClearSession";
-import OpenSessionSetting from "./OpenSessionSetting";
+import ClearSession from "@components/Settings/ClearSession";
+import OpenSessionSetting from "@components/Settings/OpenSessionSetting";
 
 const OptionsPopover: React.FC = () => {
   return (

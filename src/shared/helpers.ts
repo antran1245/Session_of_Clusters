@@ -30,3 +30,20 @@ export function createSaveWindowsObject(tabs: chrome.tabs.Tab[], windows: number
   }
   return data
 }
+
+/**
+ * Check and update name if it exist in the sessions list already
+ * @param name - String to compare
+ * @param sessionNameList - List of session name
+ * @returns - Name
+ */
+export function checkIfSessionNameExist(name:string, sessionNameList: string[]) {
+  let count = 0;
+  let originalName = name
+  while (sessionNameList.includes(name)) {
+    name = originalName
+    count++;
+    name += `_${count}`;
+  }
+  return name
+}

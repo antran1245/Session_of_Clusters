@@ -1,4 +1,4 @@
-import { Button } from "@components/ui";
+import { Button, LabelSelection } from "@components/ui";
 import {
   getAllActiveTabs,
   getCaptureVisibleTab,
@@ -104,14 +104,13 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
               return (
                 <div key={index} className="flex flex-col">
                   <div className="flex gap-2 items-center">
-                    <input
+                    <LabelSelection
+                      label={`Window ${index + 1}`}
                       type="checkbox"
                       name={`checkbox-${index}`}
                       checked={isSelected(item.windowId)}
                       onChange={() => toggleWindow(item)}
-                      className="w-4 h-4 accent-blue-800 bg-white rounded"
                     />
-                    <label>Window {index + 1}</label>
                   </div>
                   <img
                     src={item.image}

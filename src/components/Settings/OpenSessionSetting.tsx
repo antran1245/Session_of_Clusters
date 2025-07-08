@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 
 const OpenSessionSetting: React.FC = () => {
   const { settings, setSettings } = useSettingsContext();
-  const [selected, setSelected] = useState<string | boolean>("close");
+  const [selected, setSelected] = useState<string>("close");
 
   useEffect(() => {
     if (settings && settings["onSessionOpen"])

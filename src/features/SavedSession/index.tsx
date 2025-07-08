@@ -4,17 +4,28 @@ import { setStorageSession } from "@shared/chrome/storage";
 import { LabelInput, Button, Message } from "@components/ui";
 import { useStorageContext } from "@context/StorageContext";
 import SaveSelectedWindows from "./SaveSelectedWindows";
-import { createSaveSessionObject } from "@shared/helpers";
+import {
+  checkIfSessionNameExist,
+  createSaveSessionObject,
+} from "@shared/helpers";
+import OverwriteName from "@components/Settings/OverwriteName";
+import { useSettingsContext } from "@context/SettingsContext";
 
 const SaveSession: React.FC = () => {
-  // Global settings to the Sessions
-  const { setSessions } = useStorageContext();
+  // Global session
+  const { sessions, setSessions } = useStorageContext();
+  // Global settings
+  const { settings } = useSettingsContext();
   // Preset name for Session
-  const [name, setName] = useState("R2BC");
+  const [name, setName] = useState<string>("R2BC");
   // Control showing a message on successful saved of Session
   const [showMessage, setShowMessage] = useState(false);
   // Display the number of char for Session name
   const [wordCount, setWordCount] = useState<number>(0);
+  // Overwrite
+  const [overwrite, setOverwrite] = useState<boolean>(
+    settings["overwriteSessionName"].value || false
+  );
 
   // Run on update to showMessage
   useEffect(() => {
@@ -27,6 +38,7 @@ const SaveSession: React.FC = () => {
     }
   }, [showMessage]);
 
+  // Update the number of name length
   useEffect(() => {
     setWordCount(name.length);
   }, [name]);
@@ -41,8 +53,11 @@ const SaveSession: React.FC = () => {
         // Parse all tabs into an object
         let data = createSaveSessionObject(tabs);
         if (Object.keys(data).length > 0) {
+          const checkName = overwrite
+            ? name
+            : checkIfSessionNameExist(name, Object.keys(sessions));
           let session = {
-            name,
+            name: checkName,
             browsers: data,
             date: new Date().toISOString(),
           };
@@ -77,9 +92,12 @@ const SaveSession: React.FC = () => {
           </div>
         }
       />
-      <div className="flex flex-row gap-2">
-        <Button label="Save Session" onClick={saveSession} className="p-2" />
-        <SaveSelectedWindows name={name} />
+      <div className="flex flex-col gap-1">
+        <OverwriteName overwrite={overwrite} setOverwrite={setOverwrite} />
+        <div className="flex flex-row gap-2">
+          <Button label="Save Session" onClick={saveSession} className="p-2" />
+          <SaveSelectedWindows name={name} />
+        </div>
       </div>
     </form>
   );

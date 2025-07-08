@@ -1,4 +1,4 @@
-import type { SettingType } from "@shared/chrome/storage";
+import { initialSetting, type SettingType } from "@shared/chrome/storage";
 import React, { createContext, useContext, useState } from "react";
 
 type SettingsContextType = {
@@ -15,7 +15,7 @@ export const SettingProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const [settings, setSettings] = useState<SettingType>({});
+  const [settings, setSettings] = useState<SettingType>(initialSetting);
   return (
     <SettingsContext.Provider value={{ settings, setSettings }}>
       {children}

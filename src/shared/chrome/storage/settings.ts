@@ -14,14 +14,15 @@ export let initialSetting = {
 };
 
 // Data types
-
-type SettingItemType = {
-  value: string | boolean;
-  firstTime?: boolean;
-}
-
 export type SettingType = {
-  [key: string]: SettingItemType
+  onSessionOpen: {
+    value: string,
+    firstTime?: boolean,
+  };
+  overwriteSessionName: {
+    value: boolean,
+    firstTime?: boolean
+  };
 }
 
 /**

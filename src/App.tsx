@@ -22,7 +22,7 @@ function App() {
     });
     getStorageSetting().then((result) => {
       if (result && Object.keys(result).length > 0) {
-        setSettings(result);
+        setSettings({ ...initialSetting, ...result });
       } else {
         setSettings(initialSetting);
         setStorageSetting(initialSetting);
