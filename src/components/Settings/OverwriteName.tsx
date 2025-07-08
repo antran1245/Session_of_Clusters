@@ -18,7 +18,7 @@ const OverwriteName: React.FC<OverwriteNameProps> = ({
       ...settings,
       overwriteSessionName: {
         value: !overwrite,
-        firstTime: settings["overwriteSessionName"].firstTime,
+        firstTime: false,
       },
     });
     setOverwrite((prev: boolean) => !prev);
