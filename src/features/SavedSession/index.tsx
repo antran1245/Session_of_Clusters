@@ -96,7 +96,7 @@ const SaveSession: React.FC = () => {
         <OverwriteName overwrite={overwrite} setOverwrite={setOverwrite} />
         <div className="flex flex-row gap-2">
           <Button label="Save Session" onClick={saveSession} className="p-2" />
-          <SaveSelectedWindows name={name} />
+          <SaveSelectedWindows name={name} overwrite={overwrite} />
         </div>
       </div>
     </form>

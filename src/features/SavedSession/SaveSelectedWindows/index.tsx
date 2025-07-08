@@ -8,14 +8,25 @@ import React, { useState } from "react";
 import "./style.css";
 import { setStorageSession } from "@shared/chrome/storage";
 import { useStorageContext } from "@context/StorageContext";
-import { createSaveWindowsObject } from "@shared/helpers";
+import {
+  checkIfSessionNameExist,
+  createSaveWindowsObject,
+} from "@shared/helpers";
+
+interface SaveSelectedWindowsProps {
+  name: string;
+  overwrite: boolean;
+}
 
 type ImageTab = chrome.tabs.Tab & {
   image?: string;
 };
 
-const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
-  const { setSessions } = useStorageContext();
+const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
+  name,
+  overwrite,
+}) => {
+  const { sessions, setSessions } = useStorageContext();
 
   const [activeTabsImage, setActiveTabsImage] = useState<ImageTab[]>([]);
 
@@ -67,8 +78,11 @@ const SaveSelectedWindows: React.FC<{ name: string }> = ({ name }) => {
         // Parse all tabs into an object
         let data = createSaveWindowsObject(tabs, selectedWindows);
         if (Object.keys(data).length > 0) {
+          const checkName = overwrite
+            ? name
+            : checkIfSessionNameExist(name, Object.keys(sessions));
           let session = {
-            name,
+            name: checkName,
             browsers: data,
             date: new Date().toISOString(),
           };
