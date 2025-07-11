@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 import { Button } from "@components/ui";
 import arrowOpenIcon from "@assets/arrow-up-right-from-square-solid.svg";
 import trashIcon from "@assets/trash-solid.svg";
@@ -18,6 +18,7 @@ import {
 import { formatDataTime, timeAgo } from "@shared/format";
 import { getTabs } from "@shared/chrome/tabs";
 import { createSaveSessionObject } from "@shared/helpers";
+import OptInDialog from "./OptInDialog";
 
 interface SessionContainerProps {
   session: SessionType;
@@ -26,6 +27,17 @@ interface SessionContainerProps {
 const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
   const { sessions, setSessions } = useStorageContext();
   const { settings } = useSettingsContext();
+
+  const [openDialog, setOpenDialog] = useState<boolean>(false);
+
+  const dialogResolver = useRef<((value: boolean) => void) | null>(null);
+
+  function userDialogConfirm(): Promise<boolean> {
+    setOpenDialog(true);
+    return new Promise((resolve) => {
+      dialogResolver.current = resolve;
+    });
+  }
 
   /**
    * Delete a session from the store sessions and update the Chrome storage
@@ -72,7 +84,11 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
    * Open a session by creating window(s) and tabs correlating with window(s) when saved.
    * @param browsers - Browser-URLs[] pairing
    */
-  function openSession(browsers: BrowserType) {
+  async function openSession(browsers: BrowserType) {
+    const showDialog = settings["onSessionOpen"].firstTime;
+    if (showDialog) {
+      await userDialogConfirm();
+    }
     // Get all current window(s) to close
     getCurrentWindows()
       .then((windows: chrome.windows.Window[] | undefined) => {
@@ -136,6 +152,9 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
           <img src={trashIcon} alt="Trash Icon" className="w-3 h-3 invert" />
         </Button>
       </div>
+      {openDialog && (
+        <OptInDialog setOpenDialog={setOpenDialog} ref={dialogResolver} />
+      )}
     </div>
   );
 };
