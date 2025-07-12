@@ -27,10 +27,12 @@ const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
   overwrite,
 }) => {
   const { sessions, setSessions } = useStorageContext();
-
+  // Array of active tabs with an image
   const [activeTabsImage, setActiveTabsImage] = useState<ImageTab[]>([]);
-
+  // Array of window ids to be saved as a Session
   const [selectedWindows, setSelectedWindows] = useState<number[]>([]);
+  // Toggle the dialog box
+  const [showDialog, setShowDialog] = useState<boolean>(false);
 
   /**
    * Add image to Tab object to show image
@@ -45,6 +47,7 @@ const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
         }
       }
       setActiveTabsImage(addImageToTab);
+      setShowDialog(true);
     });
   }
 
@@ -100,62 +103,60 @@ const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
   return (
     <>
       <Button
-        id="save-selected-windows-button"
-        popoverTarget="save-selected-windows-container"
-        popoverTargetAction="toggle"
         label="Save Selected Windows"
         onClick={showActiveTabs}
         className="p-2"
       />
-      <div
-        id="save-selected-windows-container"
-        popover="auto"
-        className="w-[90%] h-[90%] rounded bg-[#595a78]"
-      >
-        <div className="flex flex-col gap-2 p-2">
-          <div className="flex flex-wrap gap-2 max-h-[200px] bg-[#7F8CAA] rounded overflow-y-auto p-2">
-            {activeTabsImage.map((item, index) => {
-              return (
-                <div key={index} className="flex flex-col">
-                  <div className="flex gap-2 items-center">
-                    <LabelSelection
-                      label={`Window ${index + 1}`}
-                      type="checkbox"
-                      name={`checkbox-${index}`}
-                      checked={isSelected(item.windowId)}
-                      onChange={() => toggleWindow(item)}
+      {showDialog && (
+        <div
+          id="save-selected-windows-container"
+          className="w-[90%] h-[90%] rounded bg-[#595a78]"
+        >
+          <div className="flex flex-col gap-2 p-2">
+            <div className="flex flex-wrap gap-2 max-h-[200px] bg-[#7F8CAA] rounded overflow-y-auto p-2">
+              {/* {activeTabsImage.length} */}
+              {activeTabsImage.map((item, index) => {
+                return (
+                  <div key={index} className="flex flex-col">
+                    <div className="flex gap-2 items-center">
+                      <LabelSelection
+                        label={`Window ${index + 1}`}
+                        type="checkbox"
+                        name={`checkbox-${index}`}
+                        checked={isSelected(item.windowId)}
+                        onChange={() => toggleWindow(item)}
+                      />
+                    </div>
+                    <img
+                      src={item.image}
+                      alt={item.title}
+                      width={175}
+                      height={175}
                     />
                   </div>
-                  <img
-                    src={item.image}
-                    alt={item.title}
-                    width={175}
-                    height={175}
-                  />
-                </div>
-              );
-            })}
-          </div>
-          <div className="self-end flex gap-2 flex-wrap">
-            <Button
-              label="Save"
-              popoverTarget="save-selected-windows-container"
-              popoverTargetAction="toggle"
-              onClick={() => {
-                SaveSelectedWindows();
-              }}
-              className="w-fit p-2"
-            />
-            <Button
-              label="Close"
-              popoverTarget="save-selected-windows-container"
-              popoverTargetAction="toggle"
-              onClick={() => {}}
-              className="w-fit p-2"
-            />
+                );
+              })}
+            </div>
+            <div className="self-end flex gap-2 flex-wrap">
+              <Button
+                label="Save"
+                onClick={async () => {
+                  await SaveSelectedWindows();
+                  setShowDialog(false);
+                }}
+                className="w-fit p-2"
+              />
+              <Button
+                label="Close"
+                onClick={() => {
+                  setShowDialog(false);
+                }}
+                className="w-fit p-2"
+              />
+            </div>
           </div>
         </div>
-      </div>
+      )}
     </>
   );
 };
