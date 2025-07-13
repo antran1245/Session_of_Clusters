@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { getTabs } from "@shared/chrome/tabs";
 import { setStorageSession } from "@shared/chrome/storage";
-import { LabelInput, Button, Message } from "@components/ui";
+import { LabelInput, Button, Message, Popover } from "@components/ui";
 import { useStorageContext } from "@context/StorageContext";
+import { useSettingsContext } from "@context/SettingsContext";
 import SaveSelectedWindows from "./SaveSelectedWindows";
 import {
   checkIfSessionNameExist,
   createSaveSessionObject,
 } from "@shared/helpers";
-import { useSettingsContext } from "@context/SettingsContext";
 
 const SaveSession: React.FC = () => {
   // Global session
@@ -71,14 +71,14 @@ const SaveSession: React.FC = () => {
   }
 
   return (
-    <form>
+    <form className="flex gap-2">
       <LabelInput
         label="Session Name"
         forLabel="name"
         required={true}
         value={name}
         onChange={(e) => setName(e.target.value)}
-        inputClassName="mb-3"
+        labelClassName="flex-1"
         maxLength={nameMaxLength}
         messageComponent={
           <div className={`flex flex-row flex-1`}>
@@ -91,9 +91,15 @@ const SaveSession: React.FC = () => {
           </div>
         }
       />
-      <div className="flex flex-row gap-2">
-        <Button label="Save Session" onClick={saveSession} className="p-2" />
-        <SaveSelectedWindows name={name} />
+      <div className="flex flex-row gap-2 items-end w-fit">
+        <Button
+          label="Save Session"
+          onClick={saveSession}
+          className="px-2 py-1 h-fit"
+        />
+        <Popover name="session-form" ellipseClassName="mb-1">
+          <SaveSelectedWindows name={name} />
+        </Popover>
       </div>
     </form>
   );

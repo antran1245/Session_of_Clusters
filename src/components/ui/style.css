@@ -1,6 +1,6 @@
-#options-container {
+.popover-bottom-left {
   position: absolute;
+  transform: translate(-95%, 10%);
   top: anchor(bottom);
   left: anchor(left);
-  transform: translate(-95%, 10%);
 }

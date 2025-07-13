@@ -6,8 +6,8 @@
   font-weight: 400;
 
   color-scheme: light dark;
-  color: #eaefef;
-  background-color: #333446;
+  color: #f7f7f7;
+  background-color: #323643;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -29,12 +29,7 @@ body {
   display: flex;
   min-width: 640px;
   min-height: 100vh;
-  /* height: 300px; */
-}
-
-h1 {
-  font-size: 3.2em;
-  line-height: 1.1;
+  height: 500px;
 }
 
 @media (prefers-color-scheme: light) {

@@ -31,11 +31,11 @@ function App() {
   }, []);
   return (
     <>
-      <div className="flex flex-row justify-end mt-1">
-        <OptionsPopover />
-      </div>
-      <div className="pb-3 w-[85%] mx-auto">
-        <h1 className="font-bold mb-3">Tabmark</h1>
+      <div className="w-full p-2">
+        <div className="flex justify-between items-center">
+          <h1 className="font-bold text-lg">Session of Clusters</h1>
+          <OptionsPopover />
+        </div>
         <SaveSession />
         <SavedSessionList />
       </div>
