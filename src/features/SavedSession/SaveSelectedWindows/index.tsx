@@ -37,18 +37,20 @@ const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
   /**
    * Add image to Tab object to show image
    */
-  function showActiveTabs() {
-    getAllActiveTabs().then(async (result) => {
-      let addImageToTab = [];
-      if (result) {
-        for (const tab of result) {
-          const image = await getCaptureVisibleTab(tab.windowId);
-          addImageToTab.push({ ...tab, image });
-        }
-      }
-      setActiveTabsImage(addImageToTab);
-      setShowDialog(true);
-    });
+  async function showActiveTabs() {
+    const tabs = await getAllActiveTabs();
+
+    if (!tabs) return;
+
+    const addImageToTab = await Promise.all(
+      tabs.map(async (tab) => {
+        const image = await getCaptureVisibleTab(tab.windowId);
+        return { ...tab, image };
+      })
+    );
+
+    setActiveTabsImage(addImageToTab);
+    setShowDialog(true);
   }
 
   /**
