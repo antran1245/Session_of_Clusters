@@ -8,7 +8,6 @@ import {
   checkIfSessionNameExist,
   createSaveSessionObject,
 } from "@shared/helpers";
-import OverwriteName from "@components/Settings/OverwriteName";
 import { useSettingsContext } from "@context/SettingsContext";
 
 const SaveSession: React.FC = () => {
@@ -22,10 +21,8 @@ const SaveSession: React.FC = () => {
   const [showMessage, setShowMessage] = useState(false);
   // Display the number of char for Session name
   const [wordCount, setWordCount] = useState<number>(0);
-  // Overwrite
-  const [overwrite, setOverwrite] = useState<boolean>(
-    settings["overwriteSessionName"].value || false
-  );
+
+  const nameMaxLength: number = 100;
 
   // Run on update to showMessage
   useEffect(() => {
@@ -53,7 +50,7 @@ const SaveSession: React.FC = () => {
         // Parse all tabs into an object
         let data = createSaveSessionObject(tabs);
         if (Object.keys(data).length > 0) {
-          const checkName = overwrite
+          const checkName = settings["overwriteSessionName"].value
             ? name
             : checkIfSessionNameExist(name, Object.keys(sessions));
           let session = {
@@ -82,22 +79,21 @@ const SaveSession: React.FC = () => {
         value={name}
         onChange={(e) => setName(e.target.value)}
         inputClassName="mb-3"
-        maxLength={90}
+        maxLength={nameMaxLength}
         messageComponent={
           <div className={`flex flex-row flex-1`}>
             {showMessage && (
               <Message message="Session Saved" className="font-bold" />
             )}
-            <p className="ml-auto">{wordCount}/90</p>
+            <p className="ml-auto">
+              {wordCount}/{nameMaxLength}
+            </p>
           </div>
         }
       />
-      <div className="flex flex-col gap-1">
-        <OverwriteName overwrite={overwrite} setOverwrite={setOverwrite} />
-        <div className="flex flex-row gap-2">
-          <Button label="Save Session" onClick={saveSession} className="p-2" />
-          <SaveSelectedWindows name={name} overwrite={overwrite} />
-        </div>
+      <div className="flex flex-row gap-2">
+        <Button label="Save Session" onClick={saveSession} className="p-2" />
+        <SaveSelectedWindows name={name} />
       </div>
     </form>
   );

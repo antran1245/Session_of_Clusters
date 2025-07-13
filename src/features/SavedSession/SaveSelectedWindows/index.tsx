@@ -12,21 +12,19 @@ import {
   checkIfSessionNameExist,
   createSaveWindowsObject,
 } from "@shared/helpers";
+import { useSettingsContext } from "@context/SettingsContext";
 
 interface SaveSelectedWindowsProps {
   name: string;
-  overwrite: boolean;
 }
 
 type ImageTab = chrome.tabs.Tab & {
   image?: string;
 };
 
-const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
-  name,
-  overwrite,
-}) => {
+const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({ name }) => {
   const { sessions, setSessions } = useStorageContext();
+  const { settings } = useSettingsContext();
   // Array of active tabs with an image
   const [activeTabsImage, setActiveTabsImage] = useState<ImageTab[]>([]);
   // Array of window ids to be saved as a Session
@@ -83,7 +81,7 @@ const SaveSelectedWindows: React.FC<SaveSelectedWindowsProps> = ({
         // Parse all tabs into an object
         let data = createSaveWindowsObject(tabs, selectedWindows);
         if (Object.keys(data).length > 0) {
-          const checkName = overwrite
+          const checkName = settings["overwriteSessionName"].value
             ? name
             : checkIfSessionNameExist(name, Object.keys(sessions));
           let session = {

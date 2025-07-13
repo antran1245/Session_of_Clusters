@@ -2,8 +2,11 @@ import React from "react";
 import { Button } from "@components/ui";
 import ellipseIcon from "@assets/ellipsis-vertical-solid.svg";
 import "./style.css";
-import ClearSession from "@components/Settings/ClearSession";
-import OpenSessionSetting from "@components/Settings/OpenSessionSetting";
+import {
+  ClearSession,
+  OpenSessionSetting,
+  OverwriteName,
+} from "@components/Settings";
 
 const OptionsPopover: React.FC = () => {
   return (
@@ -12,7 +15,7 @@ const OptionsPopover: React.FC = () => {
         id="options-button"
         popoverTarget={"options-container"}
         popoverTargetAction="toggle"
-        className="w-fit p-1.5 mr-1 bg-transparent hover:border-transparent"
+        className="w-fit p-0 bg-transparent hover:border-transparent"
         onClick={() => {}}
       >
         <img src={ellipseIcon} alt="Option" className="w-4 h-4 invert" />
@@ -26,6 +29,7 @@ const OptionsPopover: React.FC = () => {
         <div className="w-full flex flex-col justify-start gap-2">
           <ClearSession />
           <OpenSessionSetting />
+          <OverwriteName />
         </div>
       </div>
     </>

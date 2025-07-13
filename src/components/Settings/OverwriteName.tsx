@@ -1,17 +1,12 @@
 import { Toggle } from "@components/ui";
 import { useSettingsContext } from "@context/SettingsContext";
-import React from "react";
+import React, { useState } from "react";
 
-interface OverwriteNameProps {
-  overwrite: boolean;
-  setOverwrite: React.Dispatch<React.SetStateAction<boolean>>;
-}
-
-const OverwriteName: React.FC<OverwriteNameProps> = ({
-  overwrite,
-  setOverwrite,
-}) => {
+const OverwriteName: React.FC = () => {
   const { settings, setSettings } = useSettingsContext();
+  const [overwrite, setOverwrite] = useState<boolean>(
+    settings["overwriteSessionName"].value || false
+  );
 
   function isChecked() {
     setSettings({
