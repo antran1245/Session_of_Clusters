@@ -19,7 +19,8 @@ export function cn(...inputs: Parameters<typeof clsx>) {
 export function saveSessionData(tab:chrome.tabs.Tab, data: any) {
   const title = tab["title"] ? tab["title"] : tab["url"];
   const url = tab["url"];
-  const urlData = { title, url };
+  const active = tab["active"]
+  const urlData = { title, url, active };
   data[String(tab["windowId"])] =
     String(tab["windowId"]) in data
       ? [...data[String(tab["windowId"])], urlData]

@@ -99,11 +99,11 @@ const SessionItem: React.FC<SessionContainerProps> = ({
         // Loop through browsers object
         for (const browser in browsers) {
           let tabArray = browsers[browser];
-          let urls: string[] = [];
+          let urls: { url: string; active: boolean }[] = [];
 
           // Loop through the tabs for each browser
           for (const tab of tabArray) {
-            urls.push(tab.url);
+            urls.push({ url: tab.url, active: tab.active });
           }
           // Create a window with all the tabs from the urls array and a blank tab
           createWindowsWithTabs(urls);

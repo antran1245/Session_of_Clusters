@@ -31,13 +31,13 @@ export const closeCurrentWindows = (windows:chrome.windows.Window[]): void => {
  * Create window(s) with an array of tab(s) that was saved
  * @param urls - URLs array to open tabs
  */
-export const createWindowsWithTabs = (urls:string[]): void => {
+export const createWindowsWithTabs = (urls:{url:string, active:boolean}[]): void => {
   chrome.windows.create({state:"normal"}, (newWindow: chrome.windows.Window | undefined) => {
-    urls.forEach((url, index) => {
+    urls.forEach((url) => {
       chrome.tabs.create({
         windowId:newWindow?.id, 
-        url: url, 
-        active: index == urls.length-1
+        url: url.url, 
+        active: url.active
       })
     })
     // Remove a blank tabs that was created when the new window was created.

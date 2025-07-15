@@ -9,6 +9,7 @@ export let currentStorageSession: StorageSessionType = {}
 type URLType = {
   title: string;
   url: string;
+  active: boolean;
 }
 export type BrowserType = {
   [id: string]: URLType[];
