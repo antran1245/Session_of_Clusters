@@ -22,9 +22,13 @@ import OptInDialog from "./OptInDialog";
 
 interface SessionContainerProps {
   session: SessionType;
+  setSelectedSession: React.Dispatch<React.SetStateAction<SessionType | null>>;
 }
 
-const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
+const SessionItem: React.FC<SessionContainerProps> = ({
+  session,
+  setSelectedSession,
+}) => {
   const { sessions, setSessions } = useStorageContext();
   const { settings } = useSettingsContext();
 
@@ -123,20 +127,23 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
   }
 
   return (
-    <div
+    <button
+      type="button"
+      onClick={() => setSelectedSession(session)}
       className={
-        "flex flex-row gap-3 justify-between items-end border-b-1 p-1 px-0"
+        "w-full flex flex-row gap-3 justify-between items-center border-b-1 px-px cursor-pointer"
       }
     >
-      <div className="flex-1 min-w-0 flex flex-row justify-between items-end">
-        <p className="text-sm h-fit w-9/12 cursor-pointer truncate overflow-hidden whitespace-nowrap align-bottom text-left">
+      <div className="flex-1 min-w-0 flex flex-col justify-start">
+        <p className="text-sm h-fit cursor-pointer truncate overflow-hidden whitespace-nowrap align-bottom text-left">
           {session.name}
         </p>
-        <p className="text-xs">{timeAgo(session.date)}</p>
+        <p className="text-xs text-left">{timeAgo(session.date)}</p>
       </div>
       <div className="flex flex-row gap-1 w-fit">
         <Button
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             openSession(session.browsers);
           }}
           className="w-fit h-fit p-1.5"
@@ -144,7 +151,8 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
           <img src={arrowOpenIcon} alt="Open Icon" className="w-3 h-3 invert" />
         </Button>
         <Button
-          onClick={() => {
+          onClick={(event) => {
+            event.stopPropagation();
             deleteSession(session.name);
           }}
           className="w-fit h-fit p-1.5"
@@ -155,7 +163,7 @@ const SessionItem: React.FC<SessionContainerProps> = ({ session }) => {
       {openDialog && (
         <OptInDialog setOpenDialog={setOpenDialog} ref={dialogResolver} />
       )}
-    </div>
+    </button>
   );
 };
 

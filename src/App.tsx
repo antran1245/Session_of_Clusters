@@ -31,7 +31,7 @@ function App() {
   }, []);
   return (
     <>
-      <div className="w-full p-2">
+      <div className="flex flex-col h-full gap-1 p-2">
         <div className="flex justify-between items-center">
           <h1 className="font-bold text-lg">Session of Clusters</h1>
           <OptionsPopover />

@@ -2,11 +2,16 @@ import React, { useEffect, useState } from "react";
 import SessionItem from "./SessionItem";
 import { useStorageContext } from "@context/StorageContext";
 import type { SessionType } from "@shared/chrome/storage";
+import SessionItemContent from "./SessionItemContent";
 
 const SavedSessionContainer: React.FC = () => {
   const { sessions } = useStorageContext();
 
   const [sessionsList, setSessionsList] = useState<SessionType[]>([]);
+
+  const [selectedSession, setSelectedSession] = useState<SessionType | null>(
+    null
+  );
 
   useEffect(() => {
     const sortedList: SessionType[] = Object.values(sessions).sort(
@@ -18,15 +23,26 @@ const SavedSessionContainer: React.FC = () => {
   }, [sessions]);
 
   return (
-    <div className="flex flex-col flex-1 gap-1 mt-1">
+    <div className="flex flex-col flex-1 overflow-auto">
       <p className="text-bold text-md text-left">
-        {sessionsList.length > 0 && "Saved Session"}
+        Saved Session
         {sessionsList.length > 1 && "s"}
       </p>
-      <div className="max-h-[125px] overflow-auto pr-1">
-        {sessionsList.map((value, index) => {
-          return <SessionItem key={index} session={value} />;
-        })}
+      <div className="grid grid-cols-10 gap-1 min-h-0">
+        <div className="flex-1 min-h-0 col-span-4 overflow-auto p-1 border rounded">
+          {sessionsList.map((value, index) => {
+            return (
+              <SessionItem
+                key={index}
+                session={value}
+                setSelectedSession={setSelectedSession}
+              />
+            );
+          })}
+        </div>
+        <div className="flex-1 min-h-0 col-span-6 overflow-auto p-1 border rounded">
+          {selectedSession && <SessionItemContent session={selectedSession} />}
+        </div>
       </div>
     </div>
   );
