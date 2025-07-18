@@ -28,13 +28,14 @@ const SavedSessionContainer: React.FC = () => {
         Saved Session
         {sessionsList.length > 1 && "s"}
       </p>
-      <div className="grid grid-cols-10 gap-1 min-h-0">
+      <div className="flex-1 grid grid-cols-10 gap-1 min-h-0">
         <div className="flex-1 min-h-0 col-span-4 overflow-auto p-1 border rounded">
           {sessionsList.map((value, index) => {
             return (
               <SessionItem
                 key={index}
                 session={value}
+                selectedSession={selectedSession}
                 setSelectedSession={setSelectedSession}
               />
             );

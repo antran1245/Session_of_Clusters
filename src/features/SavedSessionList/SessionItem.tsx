@@ -22,11 +22,13 @@ import OptInDialog from "./OptInDialog";
 
 interface SessionContainerProps {
   session: SessionType;
+  selectedSession: SessionType | null;
   setSelectedSession: React.Dispatch<React.SetStateAction<SessionType | null>>;
 }
 
 const SessionItem: React.FC<SessionContainerProps> = ({
   session,
+  selectedSession,
   setSelectedSession,
 }) => {
   const { sessions, setSessions } = useStorageContext();
@@ -129,7 +131,9 @@ const SessionItem: React.FC<SessionContainerProps> = ({
   return (
     <button
       type="button"
-      onClick={() => setSelectedSession(session)}
+      onClick={() =>
+        selectedSession ? setSelectedSession(null) : setSelectedSession(session)
+      }
       className={
         "w-full flex flex-row gap-3 justify-between items-center border-b-1 px-px cursor-pointer"
       }
