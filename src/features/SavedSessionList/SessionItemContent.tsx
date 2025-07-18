@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import type { BrowserType, SessionType } from "@shared/chrome/storage";
+import { Accordion } from "@components/ui";
 
 interface SessionItemContentProps {
   session: SessionType;
@@ -29,17 +30,10 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
     setFormatSessions(updateSession);
   }, [session]);
   return (
-    <div>
-      <p>{session.name}</p>
+    <div className="text-left flex flex-col gap-1">
+      <p className="font-extrabold text-[#93DEFF]">{session.name}</p>
       {Object.entries(formatSessions).map(([title, tabs]) => (
-        <div>
-          <p>{title}</p>
-          <div>
-            {Object.values(tabs).map((key) => (
-              <div>{key.title}</div>
-            ))}
-          </div>
-        </div>
+        <Accordion title={title} items={Object.values(tabs)} />
       ))}
     </div>
   );
