@@ -131,9 +131,16 @@ const SessionItem: React.FC<SessionContainerProps> = ({
   return (
     <button
       type="button"
-      onClick={() =>
-        selectedSession ? setSelectedSession(null) : setSelectedSession(session)
-      }
+      onClick={() => {
+        if (selectedSession && selectedSession.name !== session.name) {
+          setSelectedSession(null);
+          setTimeout(() => setSelectedSession(session), 0);
+        } else if (selectedSession) {
+          setSelectedSession(null);
+        } else {
+          setSelectedSession(session);
+        }
+      }}
       className={
         "w-full flex flex-row gap-3 justify-between items-center border-b-1 px-px cursor-pointer"
       }
@@ -158,6 +165,8 @@ const SessionItem: React.FC<SessionContainerProps> = ({
           onClick={(event) => {
             event.stopPropagation();
             deleteSession(session.name);
+            if (selectedSession && selectedSession.name === session.name)
+              setSelectedSession(null);
           }}
           className="w-fit h-fit p-1.5"
         >
