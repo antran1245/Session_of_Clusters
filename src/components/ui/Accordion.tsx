@@ -3,11 +3,10 @@ import chevronDownIcon from "@assets/chevron-down-solid.svg";
 
 interface AccordionProps {
   title: string;
-  items: any[];
   children?: React.ReactNode;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, items, children }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
   const [show, setShow] = useState<boolean>(false);
 
   return (
@@ -24,22 +23,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, items, children }) => {
           className="h-4 w-4 invert"
         />
       </button>
-      {show && (
-        <div>
-          {items.map((key, index) => (
-            <div
-              className={`grid grid-cols-12 gap-1 items-center border-b border-x border-[#F7F7F7] p-2 ${
-                index === items.length - 1 ? "rounded-b" : ""
-              }`}
-            >
-              <a href={key.url} title={key.url} className="text-xs col-span-11">
-                {key.title}
-              </a>
-              {children}
-            </div>
-          ))}
-        </div>
-      )}
+      {show && <div>{children}</div>}
     </div>
   );
 };
