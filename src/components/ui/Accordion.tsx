@@ -1,14 +1,13 @@
 import React, { useState } from "react";
 import chevronDownIcon from "@assets/chevron-down-solid.svg";
-import trashIcon from "@assets/trash-solid.svg";
-import Button from "./Button";
 
 interface AccordionProps {
   title: string;
   items: any[];
+  children?: React.ReactNode;
 }
 
-const Accordion: React.FC<AccordionProps> = ({ title, items }) => {
+const Accordion: React.FC<AccordionProps> = ({ title, items, children }) => {
   const [show, setShow] = useState<boolean>(false);
 
   return (
@@ -36,16 +35,7 @@ const Accordion: React.FC<AccordionProps> = ({ title, items }) => {
               <a href={key.url} title={key.url} className="text-xs col-span-11">
                 {key.title}
               </a>
-              <Button
-                onClick={() => {}}
-                className="w-fit h-fit p-1.5 col-span-1"
-              >
-                <img
-                  src={trashIcon}
-                  alt="Trash Icon"
-                  className="w-3 h-3 invert"
-                />
-              </Button>
+              {children}
             </div>
           ))}
         </div>
