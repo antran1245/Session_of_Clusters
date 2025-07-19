@@ -6,7 +6,7 @@ export let currentStorageSession: StorageSessionType = {}
 
 // Data types
 
-type URLType = {
+export type URLType = {
   title: string;
   url: string;
   active: boolean;

@@ -1,5 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { updateStorageSession, type SessionType } from "@shared/chrome/storage";
+import {
+  updateStorageSession,
+  type SessionType,
+  type URLType,
+} from "@shared/chrome/storage";
 import { Accordion, Button } from "@components/ui";
 import trashIcon from "@assets/trash-solid.svg";
 import { useStorageContext } from "@context/StorageContext";
@@ -15,12 +19,18 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
     [id: string]: string;
   }>({});
 
-  function deleteTab(url: string, browserID: string) {
+  function deleteTab(urlData: URLType, browserID: string) {
     let updateSession = session.browsers[browserID];
-    updateSession = updateSession.filter((obj) => obj.url !== url);
+    const indexToRemove = updateSession.findIndex(
+      (obj) => obj.url === urlData.url
+    );
+    if (indexToRemove !== -1) updateSession.splice(indexToRemove, 1);
     session.browsers[browserID] = updateSession;
+    if (session.browsers[browserID].length === 0) {
+      delete session.browsers[browserID];
+    }
     setSelectedSession({ ...sessions[selectedSession.name] });
-    updateStorageSession(sessions);
+    updateStorageSession({ ...sessions });
   }
 
   useEffect(() => {
@@ -41,7 +51,7 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
       }
     }
     setActiveTabs(filterTitleBrowser);
-  }, [session]);
+  }, [selectedSession]);
 
   return (
     <div className="text-left flex flex-col gap-1">
@@ -59,7 +69,7 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
               </a>
               <Button
                 onClick={() => {
-                  deleteTab(key.url, title);
+                  deleteTab(key, title);
                 }}
                 className="w-fit h-fit p-1.5 col-span-1"
               >
