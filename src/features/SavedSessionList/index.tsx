@@ -1,3 +1,8 @@
+/**
+ * Show the saved session list
+ * Left side have the list of saved sessions
+ * Right side show selected content from the list
+ */
 import React, { useEffect, useState } from "react";
 import SessionItem from "./SessionItem";
 import { useStorageContext } from "@context/StorageContext";
@@ -5,10 +10,11 @@ import type { SessionType } from "@shared/chrome/storage";
 import SessionItemContent from "./SessionItemContent";
 
 const SavedSessionContainer: React.FC = () => {
+  // Global variable
   const { sessions } = useStorageContext();
-
+  // Control how the sessions to be shown
   const [sessionsList, setSessionsList] = useState<SessionType[]>([]);
-
+  // Control content to be displayed
   const [selectedSession, setSelectedSession] = useState<SessionType | null>(
     null
   );
