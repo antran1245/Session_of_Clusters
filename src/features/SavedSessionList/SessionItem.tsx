@@ -1,3 +1,8 @@
+/**
+ * Each session item is a button.
+ * Each session have a name, how long since session added, and action buttons.
+ * A Dialog component that showcase only if the setting on opening a session is never change/seen.
+ */
 import React, { useRef, useState } from "react";
 import { Button } from "@components/ui";
 import arrowOpenIcon from "@assets/arrow-up-right-from-square-solid.svg";
@@ -31,13 +36,17 @@ const SessionItem: React.FC<SessionContainerProps> = ({
   selectedSession,
   setSelectedSession,
 }) => {
+  // Global variables
   const { sessions, setSessions } = useStorageContext();
   const { settings } = useSettingsContext();
-
+  // Control over the Dialog component
   const [openDialog, setOpenDialog] = useState<boolean>(false);
-
   const dialogResolver = useRef<((value: boolean) => void) | null>(null);
 
+  /**
+   * Wait for user respond to follow up on the current action.
+   * @returns Promise resolve
+   */
   function userDialogConfirm(): Promise<boolean> {
     setOpenDialog(true);
     return new Promise((resolve) => {
@@ -91,6 +100,7 @@ const SessionItem: React.FC<SessionContainerProps> = ({
    * @param browsers - Browser-URLs[] pairing
    */
   async function openSession(browsers: BrowserType) {
+    // Wait for response if first time opening a session
     const showDialog = settings["onSessionOpen"].firstTime;
     if (showDialog) {
       await userDialogConfirm();
@@ -113,12 +123,14 @@ const SessionItem: React.FC<SessionContainerProps> = ({
         return windows;
       })
       .then((windows: chrome.windows.Window[] | undefined) => {
-        // Close all the currently open window(s)
+        // Setting value for when session open
         const onSessionOpen = settings["onSessionOpen"]
           ? settings["onSessionOpen"].value
           : "";
         if (windows) {
+          // Close all the currently open window(s)
           if (onSessionOpen === "close") closeCurrentWindows(windows);
+          // Save session and close
           if (onSessionOpen === "save") {
             const date = new Date().toISOString();
             const name = "Session " + formatDataTime(date);
@@ -128,19 +140,49 @@ const SessionItem: React.FC<SessionContainerProps> = ({
       });
   }
 
+  /**
+   * Toggle the display of session content
+   */
+  function toggleSelectedSession() {
+    if (selectedSession && selectedSession.name !== session.name) {
+      // Switch between content
+      setSelectedSession(null);
+      setTimeout(() => setSelectedSession(session), 0);
+    } else if (selectedSession) {
+      // No conent
+      setSelectedSession(null);
+    } else {
+      // Session content
+      setSelectedSession(session);
+    }
+  }
+
+  /**
+   * Open session handler
+   * @param event
+   */
+  function openSessionHandler(event: React.MouseEvent<HTMLButtonElement>) {
+    // Stop the events from other part of the DOM
+    event.stopPropagation();
+    openSession(session.browsers);
+  }
+
+  /**
+   * Delete session handler
+   * @param event
+   */
+  function deleteSessionHandler(event: React.MouseEvent<HTMLButtonElement>) {
+    event.stopPropagation();
+    deleteSession(session.name);
+    // If content is shown then unshow the content
+    if (selectedSession && selectedSession.name === session.name)
+      setSelectedSession(null);
+  }
+
   return (
     <button
       type="button"
-      onClick={() => {
-        if (selectedSession && selectedSession.name !== session.name) {
-          setSelectedSession(null);
-          setTimeout(() => setSelectedSession(session), 0);
-        } else if (selectedSession) {
-          setSelectedSession(null);
-        } else {
-          setSelectedSession(session);
-        }
-      }}
+      onClick={toggleSelectedSession}
       className={
         "w-full flex flex-row gap-3 justify-between items-center border-b-1 px-px cursor-pointer"
       }
@@ -153,21 +195,13 @@ const SessionItem: React.FC<SessionContainerProps> = ({
       </div>
       <div className="flex flex-row gap-1 w-fit">
         <Button
-          onClick={(event) => {
-            event.stopPropagation();
-            openSession(session.browsers);
-          }}
+          onClick={(event) => openSessionHandler(event)}
           className="w-fit h-fit p-1.5"
         >
           <img src={arrowOpenIcon} alt="Open Icon" className="w-3 h-3 invert" />
         </Button>
         <Button
-          onClick={(event) => {
-            event.stopPropagation();
-            deleteSession(session.name);
-            if (selectedSession && selectedSession.name === session.name)
-              setSelectedSession(null);
-          }}
+          onClick={(event) => deleteSessionHandler(event)}
           className="w-fit h-fit p-1.5"
         >
           <img src={trashIcon} alt="Trash Icon" className="w-3 h-3 invert" />
