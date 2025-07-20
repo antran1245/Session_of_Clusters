@@ -14,12 +14,15 @@ const SavedSessionContainer: React.FC = () => {
   );
 
   useEffect(() => {
+    // Sort the session by date
     const sortedList: SessionType[] = Object.values(sessions).sort(
       (a: SessionType, b: SessionType) => {
         return new Date(b.date).getTime() - new Date(a.date).getTime();
       }
     );
     setSessionsList(sortedList);
+    // Remove any shown content when there is no session
+    if (Object.keys(sessions).length === 0) setSelectedSession(null);
   }, [sessions]);
 
   return (
