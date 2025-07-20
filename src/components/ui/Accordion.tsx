@@ -1,3 +1,9 @@
+/**
+ * Accordion component with a require title.
+ * Children will be the items inside the accordion.
+ *
+ * Usage: <Accordion title="title">{children}</Accordion>
+ */
 import React, { useState } from "react";
 import chevronDownIcon from "@assets/chevron-down-solid.svg";
 
@@ -7,6 +13,7 @@ interface AccordionProps {
 }
 
 const Accordion: React.FC<AccordionProps> = ({ title, children }) => {
+  // Control to show the items
   const [show, setShow] = useState<boolean>(false);
 
   return (
