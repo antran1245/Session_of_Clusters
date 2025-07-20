@@ -1,3 +1,8 @@
+/**
+ * Showcase session content
+ * Each browser is an Accordion component
+ * Each Accordion item have action buttons
+ */
 import React, { useEffect, useState } from "react";
 import {
   updateStorageSession,
@@ -13,7 +18,9 @@ interface SessionItemContentProps {
 }
 
 const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
+  // Global variable
   const { sessions } = useStorageContext();
+  // Control over the session
   const [selectedSession, setSelectedSession] = useState<SessionType>(session);
   const [activeTabs, setActiveTabs] = useState<{
     [id: string]: string;
@@ -43,7 +50,7 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
   }
 
   /**
-   * On change to selectedSession, an object will be created to show the title of active for each browser.
+   * On change to selectedSession, an object will be created to show the title of active tab for each browser.
    */
   useEffect(() => {
     let filterTitleBrowser: { [id: string]: string } = {};
@@ -91,9 +98,7 @@ const SessionItemContent: React.FC<SessionItemContentProps> = ({ session }) => {
                 {key.title}
               </a>
               <Button
-                onClick={() => {
-                  deleteTab(key, id);
-                }}
+                onClick={() => deleteTab(key, id)}
                 className="w-fit h-fit p-1.5 col-span-1"
               >
                 <img
